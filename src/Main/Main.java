@@ -1,18 +1,20 @@
 package Main;
 
+import Command.*;
 import Observer.*;
 import State.*;
 import Strategy.*;
-
 public class Main {
     public static void main(String[] args) {
         System.out.println("=== TEST ===");
         testDeliveryService();
         testObserver();
         testState();
+        testCommand();
     }
 
     private static void testDeliveryService() {
+        System.out.println("\n=== STRATEGY ===");
         DeliveryService service = new DeliveryService(new ExpressDelivery());
 
         service.Calculate();
@@ -25,6 +27,7 @@ public class Main {
     }
 
     private static void testObserver() {
+        System.out.println("\n=== OBSERVER ===");
         Order order = new Order();
 
         order.follow(new EmailNotifier());
@@ -52,5 +55,18 @@ public class Main {
         canceledOrder.setState(new CreatedState());
         canceledOrder.canceled();
         canceledOrder.paid();
+    }
+
+    private static void testCommand() {
+        System.out.println("\n=== COMMAND ===");
+        Editor editor = new Editor();
+
+        Button addButton = new Button (new AddCommand(editor));
+        Button removeButton = new Button(new RemoveCommand(editor));
+
+       
+
+        addButton.click();
+        removeButton.click();
     }
 }
