@@ -5,7 +5,6 @@ import Command.*;
 import Observer.*;
 import State.*;
 import Strategy.*;
-import java.util.ArrayList;
 import java.util.List;
 public class Main {
     public static void main(String[] args) {
@@ -76,12 +75,13 @@ public class Main {
 
     private static void testChainOfResponsibility() {
         System.out.println("\n=== CHAIN OF RESPONSIBILITY ===");
-        List<Handler> handlers = new ArrayList<>();
-        handlers.add(new AuthHandler());
-        handlers.add(new ProductHandler());
-        handlers.add(new PaymentHandler());
-
-        OrderProcessor orderProcessor = new OrderProcessor(handlers);
-        orderProcessor.processOrder();
+       OrderProcessor processor = new OrderProcessor(
+        List.of(
+            new AuthHandler(),
+            new ProductHandler(),
+            new PaymentHandler()
+        )
+       );
+       processor.processOrder();
     }
 }
