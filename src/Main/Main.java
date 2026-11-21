@@ -1,9 +1,12 @@
 package Main;
 
+import CHOR.*;
 import Command.*;
 import Observer.*;
 import State.*;
 import Strategy.*;
+import java.util.ArrayList;
+import java.util.List;
 public class Main {
     public static void main(String[] args) {
         System.out.println("=== TEST ===");
@@ -11,6 +14,7 @@ public class Main {
         testObserver();
         testState();
         testCommand();
+        testChainOfResponsibility();
     }
 
     private static void testDeliveryService() {
@@ -68,5 +72,16 @@ public class Main {
 
         addButton.click();
         removeButton.click();
+    }
+
+    private static void testChainOfResponsibility() {
+        System.out.println("\n=== CHAIN OF RESPONSIBILITY ===");
+        List<Handler> handlers = new ArrayList<>();
+        handlers.add(new AuthHandler());
+        handlers.add(new ProductHandler());
+        handlers.add(new PaymentHandler());
+
+        OrderProcessor orderProcessor = new OrderProcessor(handlers);
+        orderProcessor.processOrder();
     }
 }
